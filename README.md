@@ -211,7 +211,7 @@ docker-compose up -d --build
 ```
 
 ### データベース接続エラー
-- PostgreSQLコンテナが実行中か確認
+- MySQLコンテナが実行中か確認
 - `docker-compose ps` でコンテナの状態を確認
 - `DATABASE_URL`が正しく設定されているか確認
 
