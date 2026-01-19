@@ -23,7 +23,7 @@
 
 - **Framework**: FastAPI
 - **ORM**: SQLAlchemy
-- **Database**: PostgreSQL
+- **Database**: MySQL
 - **Containerization**: Docker & Docker Compose
 - **Language**: Python 3.11+
 
