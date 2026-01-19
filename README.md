@@ -45,7 +45,48 @@ cd withyou-database
 2. 環境変数を設定（必要に応じて）
 ```bash
 # .envファイルを作成して設定
+cp .env.example .env
 ```
+
+`.env`ファイルの内容例：
+```env
+# データベース設定
+MYSQL_DATABASE=my_database
+MYSQL_ROOT_PASSWORD=root_password
+DATABASE_URL=mysql+pymysql://root:root_password@db/my_database
+
+# API設定（すべてのインターフェースでリッスン）
+API_HOST=0.0.0.0
+API_PORT=8000
+```
+
+### 同じネットワーク内の他のマシンからアクセスする場合
+
+#### 1. ホストマシンのプライベートIPアドレスを確認
+
+PowerShell で以下を実行：
+```powershell
+ipconfig
+```
+
+出力から以下を探してください：
+```
+イーサネット アダプター <接続名>:
+   ...
+   IPv4 アドレス . . . . . . . . . .: 192.168.1.100
+```
+
+この `192.168.1.100` がホストマシンのプライベートIPアドレスです。
+
+#### 2. 他のマシンからのアクセス
+
+同じネットワーク内の別のマシンから以下のURLでアクセスしてください：
+
+```
+http://<ホストマシンのIPアドレス>:8000
+```
+
+例：`http://192.168.1.100:8000`
 
 3. Dockerコンテナを起動
 ```bash
@@ -128,10 +169,33 @@ withyou-database/
 
 ## 環境変数
 
-必要に応じて `.env` ファイルで以下の環境変数を設定できます：
+`.env` ファイルで以下の環境変数を設定できます：
 
+### データベース設定
+| 変数名 | 説明 | デフォルト値 |
+|--------|------|-----------|
+| `MYSQL_DATABASE` | MySQL データベース名 | `my_database` |
+| `MYSQL_ROOT_PASSWORD` | MySQL ルートパスワード | `root_password` |
+| `DATABASE_URL` | データベース接続URL | `mysql+pymysql://root:root_password@db/my_database` |
+
+### API 設定
+| 変数名 | 説明 | デフォルト値 |
+|--------|------|-----------|
+| `API_HOST` | APIサーバーがリッスンするホスト | `0.0.0.0` |
+| `API_PORT` | APIサーバーがリッスンするポート | `8000` |
+
+#### 設定例
+
+**ローカルホストのみアクセス可能：**
+```env
+API_HOST=127.0.0.1
+API_PORT=8000
 ```
-DATABASE_URL=postgresql://user:password@db:5432/withyou
+
+**ネットワーク内の全マシンからアクセス可能（推奨）：**
+```env
+API_HOST=0.0.0.0
+API_PORT=8000
 ```
 
 ## トラブルシューティング
